@@ -29,7 +29,9 @@ bin/
 
 #User
 /rtl/*.vhd
-/rtl/*.v
+/rt/*.v
+!rt/top.v
+/tb/*
 !/rtl/Ram_1w_1r_2c.v
 *.cf
 *.xml
