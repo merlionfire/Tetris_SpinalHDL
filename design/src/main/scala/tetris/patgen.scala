@@ -21,7 +21,10 @@ case class patgen( numBars : Int) extends Component {
 
   val sel_toggle = Reg(Bool() ) init(false)
 
-  sel_toggle :=  RegNextWhen( ! sel_toggle, io.sel)
+  when ( io.sel ) {
+    sel_toggle := !sel_toggle
+
+  }
 
   val color_bar = new Area {
 

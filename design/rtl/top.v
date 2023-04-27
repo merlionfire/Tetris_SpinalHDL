@@ -1,6 +1,6 @@
 // Generator : SpinalHDL dev    git head : f518b561b4631c190dbd783ec02e46e2c7fbf8ff
 // Component : top
-// Git hash  : 5ef51580bb9d49f98d8a206243a77167e9493cdc
+// Git hash  : 3170931d7c3592f4a11ded304814d58c2c00d55c
 
 `timescale 1ns/1ps
 
@@ -264,7 +264,6 @@ module patgen (
 );
 
   reg                 sel_toggle;
-  reg                 _zz_sel_toggle;
   reg        [3:0]    color_bar_color_r;
   reg        [3:0]    color_bar_color_g;
   reg        [3:0]    color_bar_color_b;
@@ -453,13 +452,9 @@ module patgen (
     if(reset) begin
       sel_toggle <= 1'b0;
     end else begin
-      sel_toggle <= _zz_sel_toggle;
-    end
-  end
-
-  always @(posedge clk) begin
-    if(io_sel) begin
-      _zz_sel_toggle <= (! sel_toggle);
+      if(io_sel) begin
+        sel_toggle <= (! sel_toggle);
+      end
     end
   end
 
