@@ -1,6 +1,6 @@
 // Generator : SpinalHDL dev    git head : f518b561b4631c190dbd783ec02e46e2c7fbf8ff
 // Component : top
-// Git hash  : 3170931d7c3592f4a11ded304814d58c2c00d55c
+// Git hash  : 8a362ac4ad02f70c5951af7e33c0cb4a4a461530
 
 `timescale 1ns/1ps
 
@@ -263,12 +263,22 @@ module patgen (
   input               reset
 );
 
-  reg                 sel_toggle;
+  wire       [1:0]    _zz_sel_id_valueNext;
+  wire       [0:0]    _zz_sel_id_valueNext_1;
+  reg                 sel_id_willIncrement;
+  wire                sel_id_willClear;
+  reg        [1:0]    sel_id_valueNext;
+  reg        [1:0]    sel_id_value;
+  wire                sel_id_willOverflowIfInc;
+  wire                sel_id_willOverflow;
+  wire       [3:0]    color_blank_r;
+  wire       [3:0]    color_blank_g;
+  wire       [3:0]    color_blank_b;
   reg        [3:0]    color_bar_color_r;
   reg        [3:0]    color_bar_color_g;
   reg        [3:0]    color_bar_color_b;
-  wire       [3:0]    color_bar_idx;
-  wire       [3:0]    color_palette_color_r;
+  wire       [4:0]    color_bar_idx;
+  reg        [3:0]    color_palette_color_r;
   wire       [3:0]    color_palette_color_g;
   wire       [3:0]    color_palette_color_b;
   wire       [11:0]   color_palette_idx;
@@ -276,54 +286,99 @@ module patgen (
   wire       [3:0]    color_palette_color_vec_0;
   wire       [3:0]    color_palette_color_vec_1;
   wire       [3:0]    color_palette_color_vec_2;
+  wire                when_patgen_l87;
+  reg        [3:0]    _zz_io_color_r;
+  reg        [3:0]    _zz_io_color_g;
+  reg        [3:0]    _zz_io_color_b;
 
-  assign color_bar_idx = io_x[9 : 6];
+  assign _zz_sel_id_valueNext_1 = sel_id_willIncrement;
+  assign _zz_sel_id_valueNext = {1'd0, _zz_sel_id_valueNext_1};
+  always @(*) begin
+    sel_id_willIncrement = 1'b0;
+    if(io_sel) begin
+      sel_id_willIncrement = 1'b1;
+    end
+  end
+
+  assign sel_id_willClear = 1'b0;
+  assign sel_id_willOverflowIfInc = (sel_id_value == 2'b10);
+  assign sel_id_willOverflow = (sel_id_willOverflowIfInc && sel_id_willIncrement);
+  always @(*) begin
+    if(sel_id_willOverflow) begin
+      sel_id_valueNext = 2'b00;
+    end else begin
+      sel_id_valueNext = (sel_id_value + _zz_sel_id_valueNext);
+    end
+    if(sel_id_willClear) begin
+      sel_id_valueNext = 2'b00;
+    end
+  end
+
+  assign color_blank_r = 4'b0000;
+  assign color_blank_g = 4'b0000;
+  assign color_blank_b = 4'b0000;
+  assign color_bar_idx = io_x[9 : 5];
   always @(*) begin
     case(color_bar_idx)
-      4'b0000 : begin
+      5'h0 : begin
         color_bar_color_b = 4'b0000;
       end
-      4'b0001 : begin
+      5'h01 : begin
         color_bar_color_b = 4'b0111;
       end
-      4'b0010 : begin
+      5'h02 : begin
         color_bar_color_b = 4'b1111;
       end
-      4'b0011 : begin
+      5'h03 : begin
         color_bar_color_b = 4'b0000;
       end
-      4'b0100 : begin
+      5'h04 : begin
         color_bar_color_b = 4'b1111;
       end
-      4'b0101 : begin
+      5'h05 : begin
         color_bar_color_b = 4'b1111;
       end
-      4'b0110 : begin
+      5'h06 : begin
         color_bar_color_b = 4'b0000;
       end
-      4'b0111 : begin
+      5'h07 : begin
         color_bar_color_b = 4'b0111;
       end
-      4'b1000 : begin
+      5'h08 : begin
         color_bar_color_b = 4'b1111;
       end
-      4'b1001 : begin
+      5'h09 : begin
         color_bar_color_b = 4'b0000;
       end
-      4'b1010 : begin
+      5'h0a : begin
         color_bar_color_b = 4'b1111;
       end
-      4'b1011 : begin
+      5'h0b : begin
         color_bar_color_b = 4'b1111;
       end
-      4'b1100 : begin
+      5'h0c : begin
         color_bar_color_b = 4'b0000;
       end
-      4'b1101 : begin
+      5'h0d : begin
         color_bar_color_b = 4'b0111;
       end
-      4'b1110 : begin
+      5'h0e : begin
         color_bar_color_b = 4'b1111;
+      end
+      5'h0f : begin
+        color_bar_color_b = 4'b0000;
+      end
+      5'h10 : begin
+        color_bar_color_b = 4'b1111;
+      end
+      5'h11 : begin
+        color_bar_color_b = 4'b1111;
+      end
+      5'h12 : begin
+        color_bar_color_b = 4'b0000;
+      end
+      5'h13 : begin
+        color_bar_color_b = 4'b0101;
       end
       default : begin
         color_bar_color_b = 4'b0000;
@@ -333,106 +388,136 @@ module patgen (
 
   always @(*) begin
     case(color_bar_idx)
-      4'b0000 : begin
+      5'h0 : begin
         color_bar_color_g = 4'b0000;
       end
-      4'b0001 : begin
+      5'h01 : begin
         color_bar_color_g = 4'b0000;
       end
-      4'b0010 : begin
+      5'h02 : begin
         color_bar_color_g = 4'b0000;
       end
-      4'b0011 : begin
+      5'h03 : begin
         color_bar_color_g = 4'b0111;
       end
-      4'b0100 : begin
+      5'h04 : begin
         color_bar_color_g = 4'b0111;
       end
-      4'b0101 : begin
+      5'h05 : begin
         color_bar_color_g = 4'b1111;
       end
-      4'b0110 : begin
+      5'h06 : begin
         color_bar_color_g = 4'b0000;
       end
-      4'b0111 : begin
+      5'h07 : begin
         color_bar_color_g = 4'b0000;
       end
-      4'b1000 : begin
+      5'h08 : begin
         color_bar_color_g = 4'b0000;
       end
-      4'b1001 : begin
+      5'h09 : begin
         color_bar_color_g = 4'b0111;
       end
-      4'b1010 : begin
+      5'h0a : begin
         color_bar_color_g = 4'b0111;
       end
-      4'b1011 : begin
+      5'h0b : begin
         color_bar_color_g = 4'b1111;
       end
-      4'b1100 : begin
+      5'h0c : begin
         color_bar_color_g = 4'b0000;
       end
-      4'b1101 : begin
+      5'h0d : begin
         color_bar_color_g = 4'b0000;
       end
-      4'b1110 : begin
+      5'h0e : begin
+        color_bar_color_g = 4'b0000;
+      end
+      5'h0f : begin
+        color_bar_color_g = 4'b0111;
+      end
+      5'h10 : begin
+        color_bar_color_g = 4'b0111;
+      end
+      5'h11 : begin
+        color_bar_color_g = 4'b1111;
+      end
+      5'h12 : begin
+        color_bar_color_g = 4'b0101;
+      end
+      5'h13 : begin
         color_bar_color_g = 4'b0000;
       end
       default : begin
-        color_bar_color_g = 4'b0111;
+        color_bar_color_g = 4'b0000;
       end
     endcase
   end
 
   always @(*) begin
     case(color_bar_idx)
-      4'b0000 : begin
+      5'h0 : begin
         color_bar_color_r = 4'b0000;
       end
-      4'b0001 : begin
+      5'h01 : begin
         color_bar_color_r = 4'b0000;
       end
-      4'b0010 : begin
+      5'h02 : begin
         color_bar_color_r = 4'b0000;
       end
-      4'b0011 : begin
+      5'h03 : begin
         color_bar_color_r = 4'b0000;
       end
-      4'b0100 : begin
+      5'h04 : begin
         color_bar_color_r = 4'b0000;
       end
-      4'b0101 : begin
+      5'h05 : begin
         color_bar_color_r = 4'b0000;
       end
-      4'b0110 : begin
+      5'h06 : begin
         color_bar_color_r = 4'b0111;
       end
-      4'b0111 : begin
+      5'h07 : begin
         color_bar_color_r = 4'b0111;
       end
-      4'b1000 : begin
+      5'h08 : begin
         color_bar_color_r = 4'b0111;
       end
-      4'b1001 : begin
+      5'h09 : begin
         color_bar_color_r = 4'b0111;
       end
-      4'b1010 : begin
+      5'h0a : begin
         color_bar_color_r = 4'b0111;
       end
-      4'b1011 : begin
+      5'h0b : begin
         color_bar_color_r = 4'b0111;
       end
-      4'b1100 : begin
+      5'h0c : begin
         color_bar_color_r = 4'b1111;
       end
-      4'b1101 : begin
+      5'h0d : begin
         color_bar_color_r = 4'b1111;
       end
-      4'b1110 : begin
+      5'h0e : begin
+        color_bar_color_r = 4'b1111;
+      end
+      5'h0f : begin
+        color_bar_color_r = 4'b1111;
+      end
+      5'h10 : begin
+        color_bar_color_r = 4'b1111;
+      end
+      5'h11 : begin
+        color_bar_color_r = 4'b1111;
+      end
+      5'h12 : begin
+        color_bar_color_r = 4'b1111;
+      end
+      5'h13 : begin
         color_bar_color_r = 4'b1111;
       end
       default : begin
-        color_bar_color_r = 4'b1111;
+        color_bar_color_r = 4'b0000;
       end
     endcase
   end
@@ -442,19 +527,66 @@ module patgen (
   assign color_palette_color_vec_0 = _zz_color_palette_color_vec_0[3 : 0];
   assign color_palette_color_vec_1 = _zz_color_palette_color_vec_0[7 : 4];
   assign color_palette_color_vec_2 = _zz_color_palette_color_vec_0[11 : 8];
-  assign color_palette_color_r = color_palette_color_vec_2;
+  always @(*) begin
+    color_palette_color_r = color_palette_color_vec_2;
+    if(when_patgen_l87) begin
+      color_palette_color_r[3] = 1'b1;
+    end
+  end
+
   assign color_palette_color_g = color_palette_color_vec_1;
   assign color_palette_color_b = color_palette_color_vec_0;
-  assign io_color_r = (sel_toggle ? color_bar_color_r : color_palette_color_r);
-  assign io_color_g = (sel_toggle ? color_bar_color_g : color_palette_color_g);
-  assign io_color_b = (sel_toggle ? color_bar_color_b : color_palette_color_b);
+  assign when_patgen_l87 = (sel_id_value == 2'b10);
+  always @(*) begin
+    case(sel_id_value)
+      2'b00 : begin
+        _zz_io_color_r = color_bar_color_r;
+      end
+      2'b01, 2'b10 : begin
+        _zz_io_color_r = color_palette_color_r;
+      end
+      default : begin
+        _zz_io_color_r = color_blank_r;
+      end
+    endcase
+  end
+
+  always @(*) begin
+    case(sel_id_value)
+      2'b00 : begin
+        _zz_io_color_g = color_bar_color_g;
+      end
+      2'b01, 2'b10 : begin
+        _zz_io_color_g = color_palette_color_g;
+      end
+      default : begin
+        _zz_io_color_g = color_blank_g;
+      end
+    endcase
+  end
+
+  always @(*) begin
+    case(sel_id_value)
+      2'b00 : begin
+        _zz_io_color_b = color_bar_color_b;
+      end
+      2'b01, 2'b10 : begin
+        _zz_io_color_b = color_palette_color_b;
+      end
+      default : begin
+        _zz_io_color_b = color_blank_b;
+      end
+    endcase
+  end
+
+  assign io_color_r = _zz_io_color_r;
+  assign io_color_g = _zz_io_color_g;
+  assign io_color_b = _zz_io_color_b;
   always @(posedge clk or posedge reset) begin
     if(reset) begin
-      sel_toggle <= 1'b0;
+      sel_id_value <= 2'b00;
     end else begin
-      if(io_sel) begin
-        sel_toggle <= (! sel_toggle);
-      end
+      sel_id_value <= sel_id_valueNext;
     end
   end
 

@@ -18,7 +18,7 @@ case class top ( ) extends Component {
   val testImage: Boolean  = true
 
   val objects = new layout()
-  val patgen  = new patgen(16)
+  val patgen  = new patgen(20)
   val ctrl = VgaCtrl(rgbConfig,timingsWidth = timingsWidth )
 
 
