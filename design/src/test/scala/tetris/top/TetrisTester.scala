@@ -25,7 +25,7 @@ class TetrisTester extends FunSuite{
   test( testName = "testbench") {
     compiled.doSimUntilVoid(seed = 1) { dut =>
 
-      dut.clockDomain.forkStimulus(10)
+      dut.clockDomain.forkStimulus(40)
       TetrisChecker( dut.io.vga, dut.clockDomain)
 
     }

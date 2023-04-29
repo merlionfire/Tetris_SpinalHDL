@@ -33,7 +33,7 @@ case class patgen( numBars : Int) extends Component {
 
     val idx = io.x(io.x.high downto barBitsWidth)
     val Color = List(
-      0x000, 0x007, 0x00F, 0x070, 0x07F, 0x0FF, 0x700,
+      0xFFF, 0x007, 0x00F, 0x070, 0x07F, 0x0FF, 0x700,
       0x707, 0x70F, 0x770, 0x77F, 0x7FF, 0xF00, 0xF07,
       0xF0F, 0xF70, 0xF7F, 0xFFF, 0xF50, 0xF05, 0xF55
     )
@@ -89,26 +89,10 @@ case class patgen( numBars : Int) extends Component {
   }
 
   io.color  :=  sel_id.mux(
-    1 -> color_bar.color,
-    (0,2) -> color_palette.color,
+    0 -> color_bar.color,
+    (1,2) -> color_palette.color,
     //2 -> color_palette.color,
     default -> color_blank
   )
 
-
-/*
-  when ( io.color_en ) {
-
-    when ( pixel_cnt === ( barWidth - 1 )  ) {
-      pixel_cnt := 0
-      idx := idx + 1
-    } otherwise {
-      pixel_cnt := pixel_cnt + 1
-    }
-
-  } .otherwise {
-    pixel_cnt := 0
-    idx := 0
-  }
-*/
 }

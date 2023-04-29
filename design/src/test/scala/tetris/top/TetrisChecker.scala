@@ -18,7 +18,7 @@ object TetrisChecker {
 
   def apply( vga : Vga, cd : ClockDomain) : Unit = {
 
-    SimTimeout(5000000)
+    SimTimeout(50000000)
 
     val resX = 640
     val resY = 480
