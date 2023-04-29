@@ -1,6 +1,6 @@
 // Generator : SpinalHDL dev    git head : f518b561b4631c190dbd783ec02e46e2c7fbf8ff
 // Component : top
-// Git hash  : 8a362ac4ad02f70c5951af7e33c0cb4a4a461530
+// Git hash  : 0f3abd2ab0b32e91b5f01e104ff5d64d8554865f
 
 `timescale 1ns/1ps
 
@@ -265,6 +265,10 @@ module patgen (
 
   wire       [1:0]    _zz_sel_id_valueNext;
   wire       [0:0]    _zz_sel_id_valueNext_1;
+  wire       [5:0]    _zz_color_palette_idx;
+  wire       [5:0]    _zz_color_palette_idx_1;
+  wire       [5:0]    _zz_color_palette_idx_2;
+  wire       [6:0]    _zz_color_palette_idx_3;
   reg                 sel_id_willIncrement;
   wire                sel_id_willClear;
   reg        [1:0]    sel_id_valueNext;
@@ -282,7 +286,6 @@ module patgen (
   wire       [3:0]    color_palette_color_g;
   wire       [3:0]    color_palette_color_b;
   wire       [11:0]   color_palette_idx;
-  wire       [11:0]   _zz_color_palette_color_vec_0;
   wire       [3:0]    color_palette_color_vec_0;
   wire       [3:0]    color_palette_color_vec_1;
   wire       [3:0]    color_palette_color_vec_2;
@@ -293,6 +296,10 @@ module patgen (
 
   assign _zz_sel_id_valueNext_1 = sel_id_willIncrement;
   assign _zz_sel_id_valueNext = {1'd0, _zz_sel_id_valueNext_1};
+  assign _zz_color_palette_idx_1 = io_y[8 : 3];
+  assign _zz_color_palette_idx = _zz_color_palette_idx_1;
+  assign _zz_color_palette_idx_3 = io_x[9 : 3];
+  assign _zz_color_palette_idx_2 = _zz_color_palette_idx_3[5:0];
   always @(*) begin
     sel_id_willIncrement = 1'b0;
     if(io_sel) begin
@@ -522,11 +529,10 @@ module patgen (
     endcase
   end
 
-  assign color_palette_idx = {io_y[8 : 4],io_x[9 : 3]};
-  assign _zz_color_palette_color_vec_0 = color_palette_idx;
-  assign color_palette_color_vec_0 = _zz_color_palette_color_vec_0[3 : 0];
-  assign color_palette_color_vec_1 = _zz_color_palette_color_vec_0[7 : 4];
-  assign color_palette_color_vec_2 = _zz_color_palette_color_vec_0[11 : 8];
+  assign color_palette_idx = {_zz_color_palette_idx,_zz_color_palette_idx_2};
+  assign color_palette_color_vec_0 = color_palette_idx[3 : 0];
+  assign color_palette_color_vec_1 = color_palette_idx[7 : 4];
+  assign color_palette_color_vec_2 = color_palette_idx[11 : 8];
   always @(*) begin
     color_palette_color_r = color_palette_color_vec_2;
     if(when_patgen_l87) begin

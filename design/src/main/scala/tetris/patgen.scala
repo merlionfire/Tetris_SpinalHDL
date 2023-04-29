@@ -74,9 +74,9 @@ case class patgen( numBars : Int) extends Component {
 
     val color = Rgb(rgbConfig)
 
-    val idx = io.y(io.y.high downto 4) @@ io.x(io.x.high downto 3)
+    val idx = io.y(io.y.high downto 3).resize( 6 bits ) @@ io.x(io.x.high downto 3).resize(6 bits)
 
-    val color_vec = idx.resize(12).subdivideIn(4 bits)
+    val color_vec = idx.subdivideIn(4 bits)
 
     color.r := color_vec(2)
     color.g := color_vec(1)
