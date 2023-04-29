@@ -1,6 +1,6 @@
 // Generator : SpinalHDL dev    git head : f518b561b4631c190dbd783ec02e46e2c7fbf8ff
 // Component : top
-// Git hash  : 15c466c0af816a9cc771eab4091ad2858c1f7ce9
+// Git hash  : c0f54bd9d723bb6472f87c4b45a20e639a78850e
 
 `timescale 1ns/1ps
 
@@ -328,7 +328,7 @@ module patgen (
   always @(*) begin
     case(color_bar_idx)
       5'h0 : begin
-        color_bar_color_b = 4'b0000;
+        color_bar_color_b = 4'b1111;
       end
       5'h01 : begin
         color_bar_color_b = 4'b0111;
@@ -396,7 +396,7 @@ module patgen (
   always @(*) begin
     case(color_bar_idx)
       5'h0 : begin
-        color_bar_color_g = 4'b0000;
+        color_bar_color_g = 4'b1111;
       end
       5'h01 : begin
         color_bar_color_g = 4'b0000;
@@ -464,7 +464,7 @@ module patgen (
   always @(*) begin
     case(color_bar_idx)
       5'h0 : begin
-        color_bar_color_r = 4'b0000;
+        color_bar_color_r = 4'b1111;
       end
       5'h01 : begin
         color_bar_color_r = 4'b0000;
@@ -545,10 +545,10 @@ module patgen (
   assign when_patgen_l87 = (sel_id_value == 2'b10);
   always @(*) begin
     case(sel_id_value)
-      2'b01 : begin
+      2'b00 : begin
         _zz_io_color_r = color_bar_color_r;
       end
-      2'b00, 2'b10 : begin
+      2'b01, 2'b10 : begin
         _zz_io_color_r = color_palette_color_r;
       end
       default : begin
@@ -559,10 +559,10 @@ module patgen (
 
   always @(*) begin
     case(sel_id_value)
-      2'b01 : begin
+      2'b00 : begin
         _zz_io_color_g = color_bar_color_g;
       end
-      2'b00, 2'b10 : begin
+      2'b01, 2'b10 : begin
         _zz_io_color_g = color_palette_color_g;
       end
       default : begin
@@ -573,10 +573,10 @@ module patgen (
 
   always @(*) begin
     case(sel_id_value)
-      2'b01 : begin
+      2'b00 : begin
         _zz_io_color_b = color_bar_color_b;
       end
-      2'b00, 2'b10 : begin
+      2'b01, 2'b10 : begin
         _zz_io_color_b = color_palette_color_b;
       end
       default : begin
