@@ -74,8 +74,8 @@ case class patgen( numBars : Int) extends Component {
 
     val color = Rgb(rgbConfig)
 
-    val idx = io.y(io.y.high downto 3).resize( 6 bits ) @@ io.x(io.x.high downto 3).resize(6 bits)
-
+    //val idx = io.y(io.y.high downto 3).resize( 6 bits ) @@ io.x(io.x.high downto 3).resize(6 bits)
+    val idx =  io.x(io.x.high downto 3).resize(6 bits)  @@ io.y(io.y.high downto 3).resize( 6 bits )
     val color_vec = idx.subdivideIn(4 bits)
 
     color.r := color_vec(2)
@@ -89,8 +89,8 @@ case class patgen( numBars : Int) extends Component {
   }
 
   io.color  :=  sel_id.mux(
-    0 -> color_bar.color,
-    (1,2) -> color_palette.color,
+    1 -> color_bar.color,
+    (0,2) -> color_palette.color,
     //2 -> color_palette.color,
     default -> color_blank
   )

@@ -1,6 +1,6 @@
 // Generator : SpinalHDL dev    git head : f518b561b4631c190dbd783ec02e46e2c7fbf8ff
 // Component : top
-// Git hash  : 0f3abd2ab0b32e91b5f01e104ff5d64d8554865f
+// Git hash  : 15c466c0af816a9cc771eab4091ad2858c1f7ce9
 
 `timescale 1ns/1ps
 
@@ -266,9 +266,9 @@ module patgen (
   wire       [1:0]    _zz_sel_id_valueNext;
   wire       [0:0]    _zz_sel_id_valueNext_1;
   wire       [5:0]    _zz_color_palette_idx;
-  wire       [5:0]    _zz_color_palette_idx_1;
+  wire       [6:0]    _zz_color_palette_idx_1;
   wire       [5:0]    _zz_color_palette_idx_2;
-  wire       [6:0]    _zz_color_palette_idx_3;
+  wire       [5:0]    _zz_color_palette_idx_3;
   reg                 sel_id_willIncrement;
   wire                sel_id_willClear;
   reg        [1:0]    sel_id_valueNext;
@@ -296,10 +296,10 @@ module patgen (
 
   assign _zz_sel_id_valueNext_1 = sel_id_willIncrement;
   assign _zz_sel_id_valueNext = {1'd0, _zz_sel_id_valueNext_1};
-  assign _zz_color_palette_idx_1 = io_y[8 : 3];
-  assign _zz_color_palette_idx = _zz_color_palette_idx_1;
-  assign _zz_color_palette_idx_3 = io_x[9 : 3];
-  assign _zz_color_palette_idx_2 = _zz_color_palette_idx_3[5:0];
+  assign _zz_color_palette_idx_1 = io_x[9 : 3];
+  assign _zz_color_palette_idx = _zz_color_palette_idx_1[5:0];
+  assign _zz_color_palette_idx_3 = io_y[8 : 3];
+  assign _zz_color_palette_idx_2 = _zz_color_palette_idx_3;
   always @(*) begin
     sel_id_willIncrement = 1'b0;
     if(io_sel) begin
@@ -545,10 +545,10 @@ module patgen (
   assign when_patgen_l87 = (sel_id_value == 2'b10);
   always @(*) begin
     case(sel_id_value)
-      2'b00 : begin
+      2'b01 : begin
         _zz_io_color_r = color_bar_color_r;
       end
-      2'b01, 2'b10 : begin
+      2'b00, 2'b10 : begin
         _zz_io_color_r = color_palette_color_r;
       end
       default : begin
@@ -559,10 +559,10 @@ module patgen (
 
   always @(*) begin
     case(sel_id_value)
-      2'b00 : begin
+      2'b01 : begin
         _zz_io_color_g = color_bar_color_g;
       end
-      2'b01, 2'b10 : begin
+      2'b00, 2'b10 : begin
         _zz_io_color_g = color_palette_color_g;
       end
       default : begin
@@ -573,10 +573,10 @@ module patgen (
 
   always @(*) begin
     case(sel_id_value)
-      2'b00 : begin
+      2'b01 : begin
         _zz_io_color_b = color_bar_color_b;
       end
-      2'b01, 2'b10 : begin
+      2'b00, 2'b10 : begin
         _zz_io_color_b = color_palette_color_b;
       end
       default : begin
