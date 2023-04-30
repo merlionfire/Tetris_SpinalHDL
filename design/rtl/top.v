@@ -1,6 +1,6 @@
 // Generator : SpinalHDL dev    git head : f518b561b4631c190dbd783ec02e46e2c7fbf8ff
 // Component : top
-// Git hash  : c0f54bd9d723bb6472f87c4b45a20e639a78850e
+// Git hash  : 757119e6267c44bbb2365df48fb7369eed941e31
 
 `timescale 1ns/1ps
 
@@ -34,14 +34,14 @@ module top (
   wire       [3:0]    ctrl_io_vga_color_b;
   wire                ctrl_io_error;
   reg        [9:0]    x_addr;
-  reg        [8:0]    y_addr;
+  reg        [9:0]    y_addr;
   reg                 toplevel_ctrl_io_vga_colorEn_regNext;
   wire                when_top_l36;
   reg                 io_patgen_sel_regNext;
 
   layout objects (
     .io_x       (x_addr[9:0]            ), //i
-    .io_y       (y_addr[8:0]            ), //i
+    .io_y       (y_addr[9:0]            ), //i
     .io_inside  (objects_io_inside      ), //o
     .io_color_r (objects_io_color_r[3:0]), //o
     .io_color_g (objects_io_color_g[3:0]), //o
@@ -52,7 +52,7 @@ module top (
   patgen patgen_1 (
     .io_color_en (ctrl_io_vga_colorEn     ), //i
     .io_x        (x_addr[9:0]             ), //i
-    .io_y        (y_addr[8:0]             ), //i
+    .io_y        (y_addr[9:0]             ), //i
     .io_sel      (patgen_1_io_sel         ), //i
     .io_color_r  (patgen_1_io_color_r[3:0]), //o
     .io_color_g  (patgen_1_io_color_g[3:0]), //o
@@ -62,15 +62,15 @@ module top (
   );
   VgaCtrl ctrl (
     .io_softReset            (1'b0                    ), //i
-    .io_timings_h_syncStart  (10'h05f                 ), //i
-    .io_timings_h_syncEnd    (10'h31f                 ), //i
-    .io_timings_h_colorStart (10'h08f                 ), //i
-    .io_timings_h_colorEnd   (10'h30f                 ), //i
+    .io_timings_h_syncStart  (11'h087                 ), //i
+    .io_timings_h_syncEnd    (11'h52f                 ), //i
+    .io_timings_h_colorStart (11'h117                 ), //i
+    .io_timings_h_colorEnd   (11'h517                 ), //i
     .io_timings_h_polarity   (1'b0                    ), //i
-    .io_timings_v_syncStart  (10'h001                 ), //i
-    .io_timings_v_syncEnd    (10'h20c                 ), //i
-    .io_timings_v_colorStart (10'h022                 ), //i
-    .io_timings_v_colorEnd   (10'h202                 ), //i
+    .io_timings_v_syncStart  (11'h005                 ), //i
+    .io_timings_v_syncEnd    (11'h325                 ), //i
+    .io_timings_v_colorStart (11'h022                 ), //i
+    .io_timings_v_colorEnd   (11'h322                 ), //i
     .io_timings_v_polarity   (1'b0                    ), //i
     .io_frameStart           (ctrl_io_frameStart      ), //o
     .io_pixels_valid         (1'b1                    ), //i
@@ -99,7 +99,7 @@ module top (
   always @(posedge clk or posedge reset) begin
     if(reset) begin
       x_addr <= 10'h0;
-      y_addr <= 9'h0;
+      y_addr <= 10'h0;
       io_patgen_sel_regNext <= 1'b0;
     end else begin
       if(ctrl_io_vga_colorEn) begin
@@ -108,10 +108,10 @@ module top (
         x_addr <= 10'h0;
       end
       if(ctrl_io_frameStart) begin
-        y_addr <= 9'h0;
+        y_addr <= 10'h0;
       end else begin
         if(when_top_l36) begin
-          y_addr <= (y_addr + 9'h001);
+          y_addr <= (y_addr + 10'h001);
         end
       end
       io_patgen_sel_regNext <= io_patgen_sel;
@@ -127,15 +127,15 @@ endmodule
 
 module VgaCtrl (
   input               io_softReset,
-  input      [9:0]    io_timings_h_syncStart,
-  input      [9:0]    io_timings_h_syncEnd,
-  input      [9:0]    io_timings_h_colorStart,
-  input      [9:0]    io_timings_h_colorEnd,
+  input      [10:0]   io_timings_h_syncStart,
+  input      [10:0]   io_timings_h_syncEnd,
+  input      [10:0]   io_timings_h_colorStart,
+  input      [10:0]   io_timings_h_colorEnd,
   input               io_timings_h_polarity,
-  input      [9:0]    io_timings_v_syncStart,
-  input      [9:0]    io_timings_v_syncEnd,
-  input      [9:0]    io_timings_v_colorStart,
-  input      [9:0]    io_timings_v_colorEnd,
+  input      [10:0]   io_timings_v_syncStart,
+  input      [10:0]   io_timings_v_syncEnd,
+  input      [10:0]   io_timings_v_colorStart,
+  input      [10:0]   io_timings_v_colorEnd,
   input               io_timings_v_polarity,
   output              io_frameStart,
   input               io_pixels_valid,
@@ -155,14 +155,14 @@ module VgaCtrl (
 );
 
   wire                when_VgaCtrl_l183;
-  reg        [9:0]    h_counter;
+  reg        [10:0]   h_counter;
   wire                h_syncStart;
   wire                h_syncEnd;
   wire                h_colorStart;
   wire                h_colorEnd;
   reg                 h_sync;
   reg                 h_colorEn;
-  reg        [9:0]    v_counter;
+  reg        [10:0]   v_counter;
   wire                v_syncStart;
   wire                v_syncEnd;
   wire                v_colorStart;
@@ -192,17 +192,17 @@ module VgaCtrl (
   assign io_vga_color_b = io_pixels_payload_b;
   always @(posedge clk or posedge reset) begin
     if(reset) begin
-      h_counter <= 10'h0;
+      h_counter <= 11'h0;
       h_sync <= 1'b0;
       h_colorEn <= 1'b0;
-      v_counter <= 10'h0;
+      v_counter <= 11'h0;
       v_sync <= 1'b0;
       v_colorEn <= 1'b0;
     end else begin
       if(when_VgaCtrl_l183) begin
-        h_counter <= (h_counter + 10'h001);
+        h_counter <= (h_counter + 11'h001);
         if(h_syncEnd) begin
-          h_counter <= 10'h0;
+          h_counter <= 11'h0;
         end
       end
       if(h_syncStart) begin
@@ -218,14 +218,14 @@ module VgaCtrl (
         h_colorEn <= 1'b0;
       end
       if(io_softReset) begin
-        h_counter <= 10'h0;
+        h_counter <= 11'h0;
         h_sync <= 1'b0;
         h_colorEn <= 1'b0;
       end
       if(h_syncEnd) begin
-        v_counter <= (v_counter + 10'h001);
+        v_counter <= (v_counter + 11'h001);
         if(v_syncEnd) begin
-          v_counter <= 10'h0;
+          v_counter <= 11'h0;
         end
       end
       if(v_syncStart) begin
@@ -241,7 +241,7 @@ module VgaCtrl (
         v_colorEn <= 1'b0;
       end
       if(io_softReset) begin
-        v_counter <= 10'h0;
+        v_counter <= 11'h0;
         v_sync <= 1'b0;
         v_colorEn <= 1'b0;
       end
@@ -254,7 +254,7 @@ endmodule
 module patgen (
   input               io_color_en,
   input      [9:0]    io_x,
-  input      [8:0]    io_y,
+  input      [9:0]    io_y,
   input               io_sel,
   output     [3:0]    io_color_r,
   output     [3:0]    io_color_g,
@@ -265,10 +265,11 @@ module patgen (
 
   wire       [1:0]    _zz_sel_id_valueNext;
   wire       [0:0]    _zz_sel_id_valueNext_1;
+  wire       [3:0]    _zz_color_bar_idx;
   wire       [5:0]    _zz_color_palette_idx;
   wire       [6:0]    _zz_color_palette_idx_1;
   wire       [5:0]    _zz_color_palette_idx_2;
-  wire       [5:0]    _zz_color_palette_idx_3;
+  wire       [6:0]    _zz_color_palette_idx_3;
   reg                 sel_id_willIncrement;
   wire                sel_id_willClear;
   reg        [1:0]    sel_id_valueNext;
@@ -296,10 +297,11 @@ module patgen (
 
   assign _zz_sel_id_valueNext_1 = sel_id_willIncrement;
   assign _zz_sel_id_valueNext = {1'd0, _zz_sel_id_valueNext_1};
+  assign _zz_color_bar_idx = io_x[9 : 6];
   assign _zz_color_palette_idx_1 = io_x[9 : 3];
   assign _zz_color_palette_idx = _zz_color_palette_idx_1[5:0];
-  assign _zz_color_palette_idx_3 = io_y[8 : 3];
-  assign _zz_color_palette_idx_2 = _zz_color_palette_idx_3;
+  assign _zz_color_palette_idx_3 = io_y[9 : 3];
+  assign _zz_color_palette_idx_2 = _zz_color_palette_idx_3[5:0];
   always @(*) begin
     sel_id_willIncrement = 1'b0;
     if(io_sel) begin
@@ -324,7 +326,7 @@ module patgen (
   assign color_blank_r = 4'b0000;
   assign color_blank_g = 4'b0000;
   assign color_blank_b = 4'b0000;
-  assign color_bar_idx = io_x[9 : 5];
+  assign color_bar_idx = {1'd0, _zz_color_bar_idx};
   always @(*) begin
     case(color_bar_idx)
       5'h0 : begin
@@ -601,7 +603,7 @@ endmodule
 
 module layout (
   input      [9:0]    io_x,
-  input      [8:0]    io_y,
+  input      [9:0]    io_y,
   output reg          io_inside,
   output     [3:0]    io_color_r,
   output     [3:0]    io_color_g,
@@ -629,7 +631,7 @@ module layout (
 
   rectangle rectangle_1 (
     .io_x       (io_x[9:0]                  ), //i
-    .io_y       (io_y[8:0]                  ), //i
+    .io_y       (io_y[9:0]                  ), //i
     .io_inside  (rectangle_1_io_inside      ), //o
     .io_color_r (rectangle_1_io_color_r[3:0]), //o
     .io_color_g (rectangle_1_io_color_g[3:0]), //o
@@ -639,7 +641,7 @@ module layout (
   );
   square square_1 (
     .io_x       (io_x[9:0]               ), //i
-    .io_y       (io_y[8:0]               ), //i
+    .io_y       (io_y[9:0]               ), //i
     .io_inside  (square_1_io_inside      ), //o
     .io_color_r (square_1_io_color_r[3:0]), //o
     .io_color_g (square_1_io_color_g[3:0]), //o
@@ -649,7 +651,7 @@ module layout (
   );
   ball ball_1 (
     .io_x       (io_x[9:0]             ), //i
-    .io_y       (io_y[8:0]             ), //i
+    .io_y       (io_y[9:0]             ), //i
     .io_inside  (ball_1_io_inside      ), //o
     .io_color_r (ball_1_io_color_r[3:0]), //o
     .io_color_g (ball_1_io_color_g[3:0]), //o
@@ -713,7 +715,7 @@ endmodule
 
 module ball (
   input      [9:0]    io_x,
-  input      [8:0]    io_y,
+  input      [9:0]    io_y,
   output reg          io_inside,
   output     [3:0]    io_color_r,
   output     [3:0]    io_color_g,
@@ -723,14 +725,12 @@ module ball (
 );
 
   wire       [9:0]    _zz_x_offset;
-  wire       [8:0]    _zz_y_offset;
+  wire       [9:0]    _zz_y_offset;
   reg        [99:0]   _zz_xBits;
   wire       [9:0]    _zz_when_shape_l120;
   wire       [9:0]    _zz_when_shape_l120_1;
-  wire       [9:0]    _zz_when_shape_l120_2;
-  wire       [9:0]    _zz_when_shape_l120_3;
   wire       [9:0]    x0;
-  wire       [8:0]    y0;
+  wire       [9:0]    y0;
   wire       [9:0]    diameter;
   reg        [99:0]   rom_0;
   reg        [99:0]   rom_1;
@@ -11340,9 +11340,7 @@ module ball (
   assign _zz_x_offset = (io_x - x0);
   assign _zz_y_offset = (io_y - y0);
   assign _zz_when_shape_l120 = (x0 + diameter);
-  assign _zz_when_shape_l120_1 = {1'd0, io_y};
-  assign _zz_when_shape_l120_2 = (_zz_when_shape_l120_3 + diameter);
-  assign _zz_when_shape_l120_3 = {1'd0, y0};
+  assign _zz_when_shape_l120_1 = (y0 + diameter);
   always @(*) begin
     case(x_offset)
       7'b0000000 : _zz_xBits = rom_0;
@@ -11449,7 +11447,7 @@ module ball (
   end
 
   assign x0 = 10'h0c8;
-  assign y0 = 9'h12c;
+  assign y0 = 10'h12c;
   assign io_color_r = 4'b0000;
   assign io_color_g = 4'b0000;
   assign io_color_b = 4'b1111;
@@ -11657,7 +11655,7 @@ module ball (
   assign x_offset = _zz_x_offset[6:0];
   assign y_offset = _zz_y_offset[6:0];
   assign xBits = _zz_xBits;
-  assign when_shape_l120 = ((((x0 <= io_x) && (io_x < _zz_when_shape_l120)) && (y0 <= io_y)) && (_zz_when_shape_l120_1 < _zz_when_shape_l120_2));
+  assign when_shape_l120 = ((((x0 <= io_x) && (io_x < _zz_when_shape_l120)) && (y0 <= io_y)) && (io_y < _zz_when_shape_l120_1));
   always @(posedge clk or posedge reset) begin
     if(reset) begin
       io_inside <= 1'b0;
@@ -11675,7 +11673,7 @@ endmodule
 
 module square (
   input      [9:0]    io_x,
-  input      [8:0]    io_y,
+  input      [9:0]    io_y,
   output reg          io_inside,
   output     [3:0]    io_color_r,
   output     [3:0]    io_color_g,
@@ -11685,22 +11683,22 @@ module square (
 );
 
   wire       [9:0]    _zz_when_shape_l88;
-  wire       [8:0]    _zz_when_shape_l88_1;
+  wire       [9:0]    _zz_when_shape_l88_1;
   wire       [9:0]    x0;
-  wire       [8:0]    y0;
+  wire       [9:0]    y0;
   wire       [9:0]    x_width;
-  wire       [8:0]    y_height;
+  wire       [9:0]    y_height;
   wire                when_shape_l88;
 
   assign _zz_when_shape_l88 = (x0 + x_width);
   assign _zz_when_shape_l88_1 = (y0 + y_height);
   assign x0 = 10'h06e;
-  assign y0 = 9'h014;
+  assign y0 = 10'h014;
   assign io_color_r = 4'b0000;
   assign io_color_g = 4'b1111;
   assign io_color_b = 4'b0000;
   assign x_width = 10'h03c;
-  assign y_height = 9'h03c;
+  assign y_height = 10'h03c;
   assign when_shape_l88 = ((((x0 <= io_x) && (io_x < _zz_when_shape_l88)) && (y0 <= io_y)) && (io_y < _zz_when_shape_l88_1));
   always @(posedge clk or posedge reset) begin
     if(reset) begin
@@ -11719,7 +11717,7 @@ endmodule
 
 module rectangle (
   input      [9:0]    io_x,
-  input      [8:0]    io_y,
+  input      [9:0]    io_y,
   output reg          io_inside,
   output     [3:0]    io_color_r,
   output     [3:0]    io_color_g,
@@ -11729,22 +11727,22 @@ module rectangle (
 );
 
   wire       [9:0]    _zz_when_shape_l88;
-  wire       [8:0]    _zz_when_shape_l88_1;
+  wire       [9:0]    _zz_when_shape_l88_1;
   wire       [9:0]    x0;
-  wire       [8:0]    y0;
+  wire       [9:0]    y0;
   wire       [9:0]    x_width;
-  wire       [8:0]    y_height;
+  wire       [9:0]    y_height;
   wire                when_shape_l88;
 
   assign _zz_when_shape_l88 = (x0 + x_width);
   assign _zz_when_shape_l88_1 = (y0 + y_height);
   assign x0 = 10'h00a;
-  assign y0 = 9'h014;
+  assign y0 = 10'h014;
   assign io_color_r = 4'b1111;
   assign io_color_g = 4'b0000;
   assign io_color_b = 4'b0000;
   assign x_width = 10'h014;
-  assign y_height = 9'h078;
+  assign y_height = 10'h078;
   assign when_shape_l88 = ((((x0 <= io_x) && (io_x < _zz_when_shape_l88)) && (y0 <= io_y)) && (io_y < _zz_when_shape_l88_1));
   always @(posedge clk or posedge reset) begin
     if(reset) begin

@@ -42,7 +42,20 @@ case class top ( ) extends Component {
   objects.io.x  := x_addr
 
   ctrl.io.softReset := False
-  ctrl.io.timings.setAs_h640_v480_r60
+  //ctrl.io.timings.setAs_h640_v480_r60
+  ctrl.io.timings.setAs(
+    hPixels = 1024,
+    hSync = 136,
+    hFront = 24,
+    hBack = 144,
+    hPolarity = false,
+    vPixels = 768,
+    vSync = 6,
+    vFront = 3,
+    vBack = 29,
+    vPolarity = false
+  )
+
   ctrl.io.pixels.valid := True
 
 

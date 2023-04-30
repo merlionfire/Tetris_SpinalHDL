@@ -31,7 +31,7 @@ case class patgen( numBars : Int) extends Component {
 
     val color = Rgb(rgbConfig)
 
-    val idx = io.x(io.x.high downto barBitsWidth)
+    val idx = io.x(io.x.high downto barBitsWidth).resize(5)
     val Color = List(
       0xFFF, 0x007, 0x00F, 0x070, 0x07F, 0x0FF, 0x700,
       0x707, 0x70F, 0x770, 0x77F, 0x7FF, 0xF00, 0xF07,
