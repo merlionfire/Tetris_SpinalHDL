@@ -33,7 +33,7 @@ case class patgen( numBars : Int) extends Component {
 
     val idx = io.x(io.x.high downto barBitsWidth).resize(5)
     val Color = List(
-      0xFFF, 0x007, 0x00F, 0x070, 0x07F, 0x0FF, 0x700,
+      0xF00, 0x007, 0x00F, 0x070, 0x07F, 0x0FF, 0x700,
       0x707, 0x70F, 0x770, 0x77F, 0x7FF, 0xF00, 0xF07,
       0xF0F, 0xF70, 0xF7F, 0xFFF, 0xF50, 0xF05, 0xF55
     )
@@ -62,7 +62,7 @@ case class patgen( numBars : Int) extends Component {
       default {
         color.b := U(0)
         color.g := U(0)
-        color.r := U(0)
+        color.r := U(15)
       }
 
     }
@@ -74,8 +74,8 @@ case class patgen( numBars : Int) extends Component {
 
     val color = Rgb(rgbConfig)
 
-    //val idx = io.y(io.y.high downto 3).resize( 6 bits ) @@ io.x(io.x.high downto 3).resize(6 bits)
-    val idx =  io.x(io.x.high downto 3).resize(6 bits)  @@ io.y(io.y.high downto 3).resize( 6 bits )
+    val idx = io.y(io.y.high downto 4).resize( 6 bits ) @@ io.x(io.x.high downto 4).resize(6 bits)
+
     val color_vec = idx.subdivideIn(4 bits)
 
     color.r := color_vec(2)

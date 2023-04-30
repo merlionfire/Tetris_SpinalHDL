@@ -1,6 +1,6 @@
 // Generator : SpinalHDL dev    git head : f518b561b4631c190dbd783ec02e46e2c7fbf8ff
 // Component : top
-// Git hash  : 757119e6267c44bbb2365df48fb7369eed941e31
+// Git hash  : f549e498c0dad121e3d5ad08cc969073c9d4a436
 
 `timescale 1ns/1ps
 
@@ -267,9 +267,9 @@ module patgen (
   wire       [0:0]    _zz_sel_id_valueNext_1;
   wire       [3:0]    _zz_color_bar_idx;
   wire       [5:0]    _zz_color_palette_idx;
-  wire       [6:0]    _zz_color_palette_idx_1;
+  wire       [5:0]    _zz_color_palette_idx_1;
   wire       [5:0]    _zz_color_palette_idx_2;
-  wire       [6:0]    _zz_color_palette_idx_3;
+  wire       [5:0]    _zz_color_palette_idx_3;
   reg                 sel_id_willIncrement;
   wire                sel_id_willClear;
   reg        [1:0]    sel_id_valueNext;
@@ -298,10 +298,10 @@ module patgen (
   assign _zz_sel_id_valueNext_1 = sel_id_willIncrement;
   assign _zz_sel_id_valueNext = {1'd0, _zz_sel_id_valueNext_1};
   assign _zz_color_bar_idx = io_x[9 : 6];
-  assign _zz_color_palette_idx_1 = io_x[9 : 3];
-  assign _zz_color_palette_idx = _zz_color_palette_idx_1[5:0];
-  assign _zz_color_palette_idx_3 = io_y[9 : 3];
-  assign _zz_color_palette_idx_2 = _zz_color_palette_idx_3[5:0];
+  assign _zz_color_palette_idx_1 = io_y[9 : 4];
+  assign _zz_color_palette_idx = _zz_color_palette_idx_1;
+  assign _zz_color_palette_idx_3 = io_x[9 : 4];
+  assign _zz_color_palette_idx_2 = _zz_color_palette_idx_3;
   always @(*) begin
     sel_id_willIncrement = 1'b0;
     if(io_sel) begin
@@ -330,7 +330,7 @@ module patgen (
   always @(*) begin
     case(color_bar_idx)
       5'h0 : begin
-        color_bar_color_b = 4'b1111;
+        color_bar_color_b = 4'b0000;
       end
       5'h01 : begin
         color_bar_color_b = 4'b0111;
@@ -398,7 +398,7 @@ module patgen (
   always @(*) begin
     case(color_bar_idx)
       5'h0 : begin
-        color_bar_color_g = 4'b1111;
+        color_bar_color_g = 4'b0000;
       end
       5'h01 : begin
         color_bar_color_g = 4'b0000;
@@ -526,7 +526,7 @@ module patgen (
         color_bar_color_r = 4'b1111;
       end
       default : begin
-        color_bar_color_r = 4'b0000;
+        color_bar_color_r = 4'b1111;
       end
     endcase
   end
