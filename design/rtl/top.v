@@ -1,6 +1,6 @@
 // Generator : SpinalHDL dev    git head : f518b561b4631c190dbd783ec02e46e2c7fbf8ff
 // Component : top
-// Git hash  : f549e498c0dad121e3d5ad08cc969073c9d4a436
+// Git hash  : 4b4734b14cbab2c457a741c9ca789707cd118a90
 
 `timescale 1ns/1ps
 
@@ -267,7 +267,7 @@ module patgen (
   wire       [0:0]    _zz_sel_id_valueNext_1;
   wire       [3:0]    _zz_color_bar_idx;
   wire       [5:0]    _zz_color_palette_idx;
-  wire       [5:0]    _zz_color_palette_idx_1;
+  wire       [6:0]    _zz_color_palette_idx_1;
   wire       [5:0]    _zz_color_palette_idx_2;
   wire       [5:0]    _zz_color_palette_idx_3;
   reg                 sel_id_willIncrement;
@@ -298,8 +298,8 @@ module patgen (
   assign _zz_sel_id_valueNext_1 = sel_id_willIncrement;
   assign _zz_sel_id_valueNext = {1'd0, _zz_sel_id_valueNext_1};
   assign _zz_color_bar_idx = io_x[9 : 6];
-  assign _zz_color_palette_idx_1 = io_y[9 : 4];
-  assign _zz_color_palette_idx = _zz_color_palette_idx_1;
+  assign _zz_color_palette_idx_1 = io_y[9 : 3];
+  assign _zz_color_palette_idx = _zz_color_palette_idx_1[5:0];
   assign _zz_color_palette_idx_3 = io_x[9 : 4];
   assign _zz_color_palette_idx_2 = _zz_color_palette_idx_3;
   always @(*) begin
